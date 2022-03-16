@@ -1,0 +1,351 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>小码哥iOS底层原理学习记录 | Hexo</title><meta name="keywords" content="iOS,八股文,Objective-C"><meta name="author" content="Dawnbreak"><meta name="copyright" content="Dawnbreak"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="小码哥mj iOS底层原理学习记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小码哥iOS底层原理学习记录">
+<meta property="og:url" content="http://example.com/2022/01/07/%E5%B0%8F%E7%A0%81%E5%93%A5iOS%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="小码哥mj iOS底层原理学习记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/20220107005932.png">
+<meta property="article:published_time" content="2022-01-06T16:53:29.000Z">
+<meta property="article:modified_time" content="2022-03-15T21:11:22.732Z">
+<meta property="article:author" content="Dawnbreak">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="八股文">
+<meta property="article:tag" content="Objective-C">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/20220107005932.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/01/07/%E5%B0%8F%E7%A0%81%E5%93%A5iOS%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '小码哥iOS底层原理学习记录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-16 05:11:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/random/"><i class="fa-fw fas fa-random"></i><span> 随机文章</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/qymeng/cdn/img/20220107005932.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Hexo</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/random/"><i class="fa-fw fas fa-random"></i><span> 随机文章</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">小码哥iOS底层原理学习记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-06T16:53:29.000Z" title="发表于 2022-01-07 00:53:29">2022-01-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-15T21:11:22.732Z" title="更新于 2022-03-16 05:11:22">2022-03-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/iOS/">iOS</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="小码哥iOS底层原理学习记录"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="OC语法"><a href="#OC语法" class="headerlink" title="OC语法"></a>OC语法</h1><h2 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h2><h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><h4 id="一个NSObject对象占用多少内存？"><a href="#一个NSObject对象占用多少内存？" class="headerlink" title="一个NSObject对象占用多少内存？"></a>一个NSObject对象占用多少内存？</h4><ul>
+<li>系统分配了16字节给NSObject对象（通过malloc_size函数获得）</li>
+<li>但NSObject对象内部只使用了8个字节空间（64位下，通过class_getInstanceSize函数获得）</li>
+</ul>
+<h4 id="对象的isa指针指向哪里？"><a href="#对象的isa指针指向哪里？" class="headerlink" title="对象的isa指针指向哪里？"></a>对象的isa指针指向哪里？</h4><ul>
+<li>instance对象的isa指向class对象</li>
+<li>class对象的isa指向meta-class对象</li>
+<li>meta-class对象的isa指向基类的meta-class对象</li>
+</ul>
+<h4 id="OC的类信息存放在哪里？"><a href="#OC的类信息存放在哪里？" class="headerlink" title="OC的类信息存放在哪里？"></a>OC的类信息存放在哪里？</h4><ul>
+<li>成员变量的具体值，存放在instance对象中</li>
+<li>对象方法、属性、协议、成员变量信息，存放在class对象中</li>
+<li>类方法信息，存放在meta-class对象中</li>
+</ul>
+<h3 id="KVO"><a href="#KVO" class="headerlink" title="KVO"></a>KVO</h3><h4 id="iOS用什么方式实现对一个对象的KVO（KVO的本质是什么？）"><a href="#iOS用什么方式实现对一个对象的KVO（KVO的本质是什么？）" class="headerlink" title="iOS用什么方式实现对一个对象的KVO（KVO的本质是什么？）"></a>iOS用什么方式实现对一个对象的KVO（KVO的本质是什么？）</h4><ul>
+<li><p>利用Runtime API动态生成一个子类NSKVONotifying_XXX，并让instance对象的isa指向这个全新的子类</p>
+</li>
+<li><p>当修改instance对象的属性时，会调用Foundation的_NSSet***ValueAndNotify函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">willChangeValueForKey:</span><br><span class="line">父类原来的setter</span><br><span class="line">didChangeValueForKey:</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="如何手动触发KVO？"><a href="#如何手动触发KVO？" class="headerlink" title="如何手动触发KVO？"></a>如何手动触发KVO？</h4><p>手动调用willChangeValueForKey:和didChangeValueForKey:</p>
+<h4 id="直接修改成员变量会触发KVO吗？"><a href="#直接修改成员变量会触发KVO吗？" class="headerlink" title="直接修改成员变量会触发KVO吗？"></a>直接修改成员变量会触发KVO吗？</h4><p>不会触发KVO。</p>
+<h3 id="KVC"><a href="#KVC" class="headerlink" title="KVC"></a>KVC</h3><h4 id="通过KVC修改属性会触发KVO吗？"><a href="#通过KVC修改属性会触发KVO吗？" class="headerlink" title="通过KVC修改属性会触发KVO吗？"></a>通过KVC修改属性会触发KVO吗？</h4><p>会触发KVO</p>
+<h4 id="KVC的赋值和取值过程是怎样的？原理是什么？"><a href="#KVC的赋值和取值过程是怎样的？原理是什么？" class="headerlink" title="KVC的赋值和取值过程是怎样的？原理是什么？"></a>KVC的赋值和取值过程是怎样的？原理是什么？</h4><h3 id="Category"><a href="#Category" class="headerlink" title="Category"></a>Category</h3><h4 id="Category的使用场合是什么？"><a href="#Category的使用场合是什么？" class="headerlink" title="Category的使用场合是什么？"></a>Category的使用场合是什么？</h4><p>原来的类不能满足要求，需要为其添加新的方法。</p>
+<h4 id="Category的实现原理"><a href="#Category的实现原理" class="headerlink" title="Category的实现原理"></a>Category的实现原理</h4><ul>
+<li>Category编译之后的底层结构是struct category_t，里面存储着分类的对象方法、类方法、协议、属性信息</li>
+<li>在程序运行的时候，runtime会将Category的数据，合并到类信息中（类对象、元类对象中）</li>
+</ul>
+<h4 id="Category和Class-Extension的区别是什么？"><a href="#Category和Class-Extension的区别是什么？" class="headerlink" title="Category和Class Extension的区别是什么？"></a>Category和Class Extension的区别是什么？</h4><ul>
+<li>Class Extension在编译时，它的数据已经包含在类信息中</li>
+<li>Category是在运行时，才会将数据合并到类信息中</li>
+</ul>
+<h4 id="Category中有load方法吗？load方法是什么时候调用的？load方法能继承吗？"><a href="#Category中有load方法吗？load方法是什么时候调用的？load方法能继承吗？" class="headerlink" title="Category中有load方法吗？load方法是什么时候调用的？load方法能继承吗？"></a>Category中有load方法吗？load方法是什么时候调用的？load方法能继承吗？</h4><h4 id="load、initialize方法的区别是什么？它们在category中的调用顺序？以及出现继承时它们之间的调用过程？"><a href="#load、initialize方法的区别是什么？它们在category中的调用顺序？以及出现继承时它们之间的调用过程？" class="headerlink" title="load、initialize方法的区别是什么？它们在category中的调用顺序？以及出现继承时它们之间的调用过程？"></a>load、initialize方法的区别是什么？它们在category中的调用顺序？以及出现继承时它们之间的调用过程？</h4><h4 id="Category能否添加成员变量？如果可以，如何给Category添加成员变量？"><a href="#Category能否添加成员变量？如果可以，如何给Category添加成员变量？" class="headerlink" title="Category能否添加成员变量？如果可以，如何给Category添加成员变量？"></a>Category能否添加成员变量？如果可以，如何给Category添加成员变量？</h4><h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><h3 id="面向对象-1"><a href="#面向对象-1" class="headerlink" title="面向对象"></a>面向对象</h3><h4 id="Objective-C的本质"><a href="#Objective-C的本质" class="headerlink" title="Objective-C的本质"></a>Objective-C的本质</h4><p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220107221454467.png" alt="image-20220107221454467"></p>
+<ul>
+<li>OC代码的底层实现都是C&#x2F;C++代码</li>
+<li>OC的对象、类是基于C&#x2F;C++的<strong>结构体</strong>这一数据结构实现</li>
+</ul>
+<p>将OC代码转化为C&#x2F;C++代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xcrun -sdk iphoneos clang -<span class="built_in">arch</span> arm64 -rewrite-objc OC源文件 -o 输出CPP文件</span><br></pre></td></tr></table></figure>
+
+<p>xcode指定iphoneos</p>
+<h4 id="OC对象的本质"><a href="#OC对象的本质" class="headerlink" title="OC对象的本质"></a>OC对象的本质</h4><h5 id="NSObject的底层实现"><a href="#NSObject的底层实现" class="headerlink" title="NSObject的底层实现"></a>NSObject的底层实现</h5><p>写一段OC代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSObject *obj = [[NSObject alloc] init];</span><br></pre></td></tr></table></figure>
+
+<p>按照上面方法转换成C++代码后可以看到实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// NSObject Implementation</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">NSObject_IMPL</span> &#123;</span><br><span class="line">  Class isa;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>直接跳转到说明可以看到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct objc_class *Class;	// 指针，Class是一个指向objc_class结构体的指针</span><br><span class="line">@interface NSObject &#123;							// NSOb</span><br><span class="line">  Class isa;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>可以得到结论：</p>
+<ul>
+<li>obj的值，就<strong>是alloc出的NSObject对象的地址值</strong>；又因为NSObject中只有一个成员，<strong>又是isa的地址值</strong>。</li>
+</ul>
+<h5 id="两个容易混淆的函数"><a href="#两个容易混淆的函数" class="headerlink" title="两个容易混淆的函数"></a>两个容易混淆的函数</h5><p>创建一个实例对象，至少需要多少内存？不包括对齐，（理论情况）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">// 获取NSObject类的实例对象的成员变量经过对齐后所占用的内存大小：8</span><br><span class="line">class_getInstanceSize([NSObject class]);</span><br></pre></td></tr></table></figure>
+
+<p>创建一个实例对象，实际分配了多少内存？包括对齐，实际情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;malloc/malloc.h&gt;</span><br><span class="line">// 获得obj指针所指向内存的大小：16</span><br><span class="line">malloc_size((__bridge const void *)obj);</span><br></pre></td></tr></table></figure>
+
+<h5 id="实时查看内存数据"><a href="#实时查看内存数据" class="headerlink" title="实时查看内存数据"></a>实时查看内存数据</h5><p>Debug -&gt; Debug Workflow -&gt; View Memory (Shift + Command + M)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220108052437554.png" alt="image-20220108052437554"></p>
+<p>一个数据是1个字节（8位），刚好用两个16进制数表示。可以使用lldb命令查看。</p>
+<h5 id="常用的LLDB指令"><a href="#常用的LLDB指令" class="headerlink" title="常用的LLDB指令"></a>常用的LLDB指令</h5><p>1.<code>print/p</code>：打印</p>
+<p>2.<code>po</code>：打印对象</p>
+<p>3.读取内存</p>
+<p><code>memory read /&lt;数量&gt;&lt;格式&gt;&lt;字节数&gt; 内存地址</code>，可简写为</p>
+<p><code>x /&lt;数量&gt;&lt;格式&gt;&lt;字节数&gt; 内存地址</code></p>
+<p>格式：x是16进制、f是浮点数、d是10进制</p>
+<p>字节数：b(byte)1字节，h(half word)2字节，w(word)4字节，g(giant word)8字节</p>
+<p>例如<code>x /3xw 0x10010</code>，表示读取地址0x10010处3*4字节大小数据，结果以16进制显示</p>
+<p>4.修改内存中的值</p>
+<p><code>memory write 内存地址 数值</code></p>
+<p>例如<code>memory write 0x0000010 10</code></p>
+<h5 id="大小端模式（Big-endian-x2F-Little-endian）"><a href="#大小端模式（Big-endian-x2F-Little-endian）" class="headerlink" title="大小端模式（Big-endian&#x2F;Little-endian）"></a>大小端模式（Big-endian&#x2F;Little-endian）</h5><p>大端模式：是指数据的高字节保存在内存的低地址中，而数据的低字节保存在内存的高地址中。类似于把数据当做字符串顺序处理，和阅读习惯一致。</p>
+<p>小端模式：是指数据的高字节保存在内存的高地址中，而数据的低字节保存在内存的低地址中。这种存储模式<strong>将地址的高低和数据位权有效结合</strong>，高地址部分权值高，低地址部分权值低。</p>
+<h5 id="复杂点的OC对象本质"><a href="#复杂点的OC对象本质" class="headerlink" title="复杂点的OC对象本质"></a>复杂点的OC对象本质</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@interface Student : NSObject &#123;</span><br><span class="line">	@public</span><br><span class="line">	int _no;</span><br><span class="line">	int _age;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// 转成C++</span><br><span class="line">struct Student_IMPL &#123;</span><br><span class="line">  struct NSObject_IMPL NSObject_IVARS;	// 8</span><br><span class="line">  int _no;	// 4</span><br><span class="line">  int _age;	// 4</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@interface Person : NSObject &#123;</span><br><span class="line">  int _age;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line">  </span><br><span class="line">@interface Student : Person &#123;</span><br><span class="line">  int _no;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// 转成C++</span><br><span class="line">struct Person_IMPL &#123;</span><br><span class="line">  struct NSObject_IMPL NSObject_IVARS;	// 8</span><br><span class="line">  int _age;	// 4</span><br><span class="line">&#125;;	// 内存对齐：结构体的大小必须是最大成员的大小的倍数</span><br><span class="line"></span><br><span class="line">struct Student_IMPL &#123;</span><br><span class="line">	struct Person_IMPL Person_IVARS;</span><br><span class="line">  int _no;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这两个类（对象）使用class_getInstanceSize和malloc_size获得的结果都是16</p>
+<p>对于class_getInstanceSize([Person class])结果是16说明一下：</p>
+<p>class_getInstanceSize返回类的实例对象的<strong>成员变量占用内存大小</strong>（12）<strong>经过对齐后</strong>（16）的结果。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@interface Student : NSObject &#123;</span><br><span class="line">	int _age;</span><br><span class="line">	int _height;</span><br><span class="line">	int _no;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct Student_IMPL &#123;</span><br><span class="line">	struct NSObject_IMPL NSObject_IVARS;	// 8</span><br><span class="line">	int _age;	// 4</span><br><span class="line">	int _height; // 4</span><br><span class="line">	int _no;	// 4</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// class_getInstance([Student class]) : 24</span><br><span class="line">// malloc_size((__bridge const void *)stu) : 32</span><br></pre></td></tr></table></figure>
+
+<h3 id="OC对象的分类"><a href="#OC对象的分类" class="headerlink" title="OC对象的分类"></a>OC对象的分类</h3><p>Objective-C中的对象，简称OC对象，主要可以分为以下三种：</p>
+<ul>
+<li><strong>instance</strong>对象（<strong>实例</strong>对象）</li>
+<li><strong>class</strong>对象（<strong>类</strong>对象）</li>
+<li><strong>meta-class</strong>对象（<strong>元类</strong>对象）</li>
+</ul>
+<h4 id="instance对象"><a href="#instance对象" class="headerlink" title="instance对象"></a>instance对象</h4><p><strong>instance</strong>对象就是类alloc出来的对象，每次调用alloc都会产生新的instance对象。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSObject *obj1 = [[NSObject alloc] init];</span><br><span class="line">NSObject *obj2 = [[NSObject alloc] init];</span><br></pre></td></tr></table></figure>
+
+<p>ob1、obj2是NSObject的instance对象，是两个不同的对象，分别占据着两块不同的内存。</p>
+<p>instance对象在内存中存储的信息包括：</p>
+<ul>
+<li><strong>isa指针</strong></li>
+<li>其他<strong>成员变量</strong>的值</li>
+</ul>
+<h4 id="class对象"><a href="#class对象" class="headerlink" title="class对象"></a>class对象</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">NSObject *obj1 = [[NSObject alloc] init];</span><br><span class="line">NSObject *obj2 = [[NSObject alloc] init];</span><br><span class="line">Class objClass1 = [obj1 class];</span><br><span class="line">Class objClass2 = [obj2 class];</span><br><span class="line">Class objClass3 = [NSObject class];</span><br><span class="line">Class objClass4 = object_class(obj1);	// Runtime API</span><br><span class="line">Class objClass5 = object_class(obj2);	// Runtime API</span><br></pre></td></tr></table></figure>
+
+<p>objClass1~objClass5都是NSObject的<strong>class</strong>对象（<strong>类</strong>对象）。</p>
+<p>它们都是同一个对象，每个类在内存中<strong>有且仅有一个</strong>class对象。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220109022512935.png" alt="image-20220109022512935"></p>
+<p>class对象在内存中存储的信息包括：</p>
+<ul>
+<li><strong>isa</strong>指针</li>
+<li><strong>superclass</strong>指针</li>
+<li>类的<strong>属性</strong>信息（@property）、类的<strong>对象方法</strong>信息（instance method）</li>
+<li>类的<strong>协议</strong>信息（protocol)、类的<strong>成员变量</strong>信息（ivar）</li>
+<li>…</li>
+</ul>
+<h4 id="meta-class对象"><a href="#meta-class对象" class="headerlink" title="meta-class对象"></a>meta-class对象</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class objMetaClass = object_getClass([NSObject class]); // Runtime API</span><br></pre></td></tr></table></figure>
+
+<p>objMetaClass是NSObject的<strong>meta-class</strong>对象（<strong>元类</strong>对象）,object_getClass传入class对象返回的是meta-class对象。</p>
+<p>每个类在内存中<strong>有且仅有一个</strong>meta-class对象</p>
+<p><strong>meta-class对象和class对象的内存结构一样</strong>，但是用途不一样</p>
+<p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220109022524325.png" alt="image-20220109022524325"></p>
+<p>meta-class对象在内存中存储的信息包括：</p>
+<ul>
+<li><strong>isa</strong>指针</li>
+<li><strong>superclass</strong>指针</li>
+<li>类的<strong>类方法</strong>信息（class method）</li>
+<li>…</li>
+</ul>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><h5 id="实例-x2F-类方法class返回的一定是class对象"><a href="#实例-x2F-类方法class返回的一定是class对象" class="headerlink" title="实例&#x2F;类方法class返回的一定是class对象"></a>实例&#x2F;类方法class返回的一定是class对象</h5><p>以下代码获取的objClass是class对象，而不是meta-class对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class objClass = [[NSObject class] class];</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看Class是否是meta-class"><a href="#查看Class是否是meta-class" class="headerlink" title="查看Class是否是meta-class"></a>查看Class是否是meta-class</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">BOOL result = class_isMetaClass([NSObject class]);</span><br></pre></td></tr></table></figure>
+
+<h5 id="object-getClass与objc-getClass"><a href="#object-getClass与objc-getClass" class="headerlink" title="object_getClass与objc_getClass"></a>object_getClass与objc_getClass</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 传入obj可能是instance对象、class对象、meta-class对象</span><br><span class="line">// 返回obj的isa</span><br><span class="line">// 如果obj是instance对象，返回class对象</span><br><span class="line">// 如果obj是class对象，返回meta-class对象</span><br><span class="line">// 如果obj是meta-class对象，返回NSObject基类的meta-class对象</span><br><span class="line">Class object_getClass(id obj);</span><br><span class="line"></span><br><span class="line">// 传入类名字符串，返回该类的class对象 </span><br><span class="line">Class objc_getClass(const char *aClassName);</span><br><span class="line"></span><br><span class="line">// - (Class)class、+ (Class)class返回的一定是class对象</span><br></pre></td></tr></table></figure>
+
+<h3 id="isa和superclass"><a href="#isa和superclass" class="headerlink" title="isa和superclass"></a>isa和superclass</h3><h4 id="isa指针"><a href="#isa指针" class="headerlink" title="isa指针"></a>isa指针</h4><p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220109033215213.png" alt="image-20220109033215213"></p>
+<ul>
+<li><p><strong>instance</strong>的<strong>isa</strong>指向<strong>class</strong></p>
+<p>当<strong>调用对象方法</strong>时，通过<strong>instance</strong>的<strong>isa</strong>找到<strong>class</strong>，最后找到<strong>对象方法的实现</strong>进行调用。</p>
+</li>
+<li><p><strong>class</strong>的<strong>isa</strong>指向<strong>meta-class</strong></p>
+<p>当<strong>调用类方法</strong>时，通过<strong>class</strong>的<strong>isa</strong>找到<strong>meta-class</strong>，最后找到<strong>类方法的实现</strong>进行调用。</p>
+</li>
+</ul>
+<h4 id="class对象的superclass指针"><a href="#class对象的superclass指针" class="headerlink" title="class对象的superclass指针"></a>class对象的superclass指针</h4><p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220109061328111.png" alt="image-20220109061328111"></p>
+<p>当<strong>Student的instance</strong>对象要<strong>调用Person的对象方法</strong>时，会先<strong>通过isa</strong>找到<strong>Student的class</strong>，然后<strong>通过superclass</strong>找到<strong>Person的class</strong>，最后<strong>找到对象方法的实现</strong>进行调用。</p>
+<h4 id="meta-class对象的superclass指针"><a href="#meta-class对象的superclass指针" class="headerlink" title="meta-class对象的superclass指针"></a>meta-class对象的superclass指针</h4><p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220109061600984.png" alt="image-20220109061600984"></p>
+<p>当<strong>Student的class</strong>要<strong>调用Person的类方法</strong>时，会先通过<strong>isa</strong>找到<strong>Student的meta-class</strong>，然后通过<strong>superclass</strong>找到<strong>Person的meta-class</strong>，最后<strong>找到类方法的实现</strong>进行调用。</p>
+<h4 id="isa、superclass总结"><a href="#isa、superclass总结" class="headerlink" title="isa、superclass总结"></a>isa、superclass总结</h4><p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220109061837209.png" alt="image-20220109061837209"></p>
+<ul>
+<li><p>instance的isa指向class</p>
+</li>
+<li><p>class的isa指向meta-class</p>
+</li>
+<li><p>meta-class的isa指向基类的meta-class</p>
+</li>
+<li><p>class的superclass指向父类的class</p>
+<p>如果没有父类，superclass指针为nil</p>
+</li>
+<li><p>meta-class的superclass指向父类的meta-class</p>
+<p><strong>基类的meta-class的superclass指向基类的class</strong></p>
+</li>
+<li><p>instance调用对象方法的轨迹</p>
+<p>isa找到class，方法不存在，就通过superclass找父类</p>
+</li>
+<li><p>class调用类方法的轨迹</p>
+<p>isa找到meta-class，方法不存在，就通过superclass找父类</p>
+</li>
+</ul>
+<h3 id="Class的结构"><a href="#Class的结构" class="headerlink" title="Class的结构"></a>Class的结构</h3><h4 id="64bit下的isa指针"><a href="#64bit下的isa指针" class="headerlink" title="64bit下的isa指针"></a>64bit下的isa指针</h4><p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220110101103790.png" alt="image-20220110101103790"></p>
+<p>从64bit开始，isa需要进行一次位运算，才能计算出真实地址</p>
+<p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220110101205841.png" alt="image-20220110101205841"></p>
+<h4 id="窥探struct-objc-class的结构"><a href="#窥探struct-objc-class的结构" class="headerlink" title="窥探struct objc_class的结构"></a>窥探struct objc_class的结构</h4><p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220110103351565.png" alt="image-20220110103351565"></p>
+<ul>
+<li>bits &amp; FAST_DATA_MASK后得到一个指针，指向struct class_rw_t的内存</li>
+</ul>
+<h3 id="KVO-1"><a href="#KVO-1" class="headerlink" title="KVO"></a>KVO</h3><p>KVO的全称是Key-Value Observing，俗称“<strong>键值监听</strong>”，可以监听<strong>某个对象属性值的改变</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220110112444401.png" alt="image-20220110112444401"></p>
+<h4 id="未使用KVO监听的对象"><a href="#未使用KVO监听的对象" class="headerlink" title="未使用KVO监听的对象"></a>未使用KVO监听的对象</h4><p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220111022807531.png" alt="image-20220111022807531"></p>
+<h4 id="使用了KVO监听的对象"><a href="#使用了KVO监听的对象" class="headerlink" title="使用了KVO监听的对象"></a>使用了KVO监听的对象</h4><p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220111022821534.png" alt="image-20220111022821534"></p>
+<ul>
+<li><p>利用Runtime API动态生成一个子类，名为NSKVONotifying_XXX，并且让instance对象的isa指向这个全新的子类</p>
+</li>
+<li><p>当修改instance对象的属性时，会调用Foundation的_NSSetXXXValueAndNotify，XXX为属性的类型，例如_NSSetIntValueAndNotify</p>
+</li>
+<li><p>_NSSetXXXValueAndNotify的内部实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">willChangeValueForKey:</span><br><span class="line">父类原来的setter</span><br><span class="line">didChangeValueForKey:	// 内部会触发监听器（Observer)的监听方法（observeValueForKeyPath:ofObject:change:context），通知监听器，某某属性值发生了改变</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h4><ul>
+<li>使用methodForSelector:方法，获取方法指针，然后使用LLDB命令<code>p (IMP)value</code>打印可以看到方法的类型。</li>
+<li>KVO中新生成的子类中，用class方法而不是object_class去获取class对象时，打印出来的类型还是原来的类型，原因是<strong>新生成的子类重写了class方法</strong>。</li>
+</ul>
+<h3 id="KVC-1"><a href="#KVC-1" class="headerlink" title="KVC"></a>KVC</h3><p>KVC的全程是Key-Value Coding，俗称“键值编码”，可以通过一个key来访问某个属性</p>
+<p>常见的API有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)setValue:(id)value forKeyPath:(NSString *)keyPath;</span><br><span class="line">- (void)setValue:(id)Value forKey:(NSString *)key;</span><br><span class="line">- (id)valueForKeyPath:(NSString *)keyPath;</span><br><span class="line">- (id)valueForKey:(NSString *)key;</span><br></pre></td></tr></table></figure>
+
+<h4 id="setValue-forKey-的原理"><a href="#setValue-forKey-的原理" class="headerlink" title="setValue:forKey:的原理"></a>setValue:forKey:的原理</h4><p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220111080748527.png" alt="image-20220111080748527"></p>
+<p>accessInstanceVariablesDirectly方法的默认返回值是YES</p>
+<h4 id="valueForKey-的原理"><a href="#valueForKey-的原理" class="headerlink" title="valueForKey:的原理"></a>valueForKey:的原理</h4><p><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/image-20220111080903262.png" alt="image-20220111080903262"></p>
+<h3 id="Category-1"><a href="#Category-1" class="headerlink" title="Category"></a>Category</h3><h4 id="Category的底层结构"><a href="#Category的底层结构" class="headerlink" title="Category的底层结构"></a>Category的底层结构</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">struct category_t &#123;</span><br><span class="line">  const char *name;	// 分类名</span><br><span class="line">  classref_t cls;</span><br><span class="line">  struct method_list_t *instanceMethods;	// 实例方法</span><br><span class="line">  struct method_list_t *classMethods;	// 类方法</span><br><span class="line">  struct protocol_list_t *protocols;	// 协议</span><br><span class="line">  struct property_list_t *instanceProperties;	// 属性</span><br><span class="line">  // Fields below this point are not always present on disk.</span><br><span class="line">  struct property_list_t *_classProperties;</span><br><span class="line">  </span><br><span class="line">  method_list_t *methodsForMeta(bool isMeta) &#123;</span><br><span class="line">    if (isMeta) return classMethods;</span><br><span class="line">    else return instanceMethods;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  property_list_t *peropertiesForMeta(bool isMeta, struct header_info *hi);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Category的加载处理过程"><a href="#Category的加载处理过程" class="headerlink" title="Category的加载处理过程"></a>Category的加载处理过程</h4><ol>
+<li>通过Runtime加载某个类的所有Category数据</li>
+<li>把所有Category的方法、协议、属性数据，合并到一个大数组中，后编译的Category数据，会在数组的前面</li>
+<li>将合并后的分类数据（方法、协议、属性），插入到类原来数据的前面</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Dawnbreak</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/01/07/%E5%B0%8F%E7%A0%81%E5%93%A5iOS%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">http://example.com/2022/01/07/%E5%B0%8F%E7%A0%81%E5%93%A5iOS%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Hexo</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/iOS/">iOS</a><a class="post-meta__tags" href="/tags/%E5%85%AB%E8%82%A1%E6%96%87/">八股文</a><a class="post-meta__tags" href="/tags/Objective-C/">Objective-C</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/20220107005932.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9B%B8%E5%85%B3%E8%8B%B1%E8%AF%AD%E8%AF%8D%E6%B1%87/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计算机相关英语词汇</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/05/%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/20220106095650.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">博客使用心得</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Dawnbreak</div><div class="author-info__description"></div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/qymeng" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:qymeng.private@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OC%E8%AF%AD%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">OC语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">面试题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.1.1.</span> <span class="toc-text">面向对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%B8%AANSObject%E5%AF%B9%E8%B1%A1%E5%8D%A0%E7%94%A8%E5%A4%9A%E5%B0%91%E5%86%85%E5%AD%98%EF%BC%9F"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">一个NSObject对象占用多少内存？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84isa%E6%8C%87%E9%92%88%E6%8C%87%E5%90%91%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">对象的isa指针指向哪里？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OC%E7%9A%84%E7%B1%BB%E4%BF%A1%E6%81%AF%E5%AD%98%E6%94%BE%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">OC的类信息存放在哪里？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KVO"><span class="toc-number">1.1.2.</span> <span class="toc-text">KVO</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#iOS%E7%94%A8%E4%BB%80%E4%B9%88%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0%E5%AF%B9%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84KVO%EF%BC%88KVO%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%EF%BC%89"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">iOS用什么方式实现对一个对象的KVO（KVO的本质是什么？）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E8%A7%A6%E5%8F%91KVO%EF%BC%9F"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">如何手动触发KVO？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E4%BC%9A%E8%A7%A6%E5%8F%91KVO%E5%90%97%EF%BC%9F"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">直接修改成员变量会触发KVO吗？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KVC"><span class="toc-number">1.1.3.</span> <span class="toc-text">KVC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87KVC%E4%BF%AE%E6%94%B9%E5%B1%9E%E6%80%A7%E4%BC%9A%E8%A7%A6%E5%8F%91KVO%E5%90%97%EF%BC%9F"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">通过KVC修改属性会触发KVO吗？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#KVC%E7%9A%84%E8%B5%8B%E5%80%BC%E5%92%8C%E5%8F%96%E5%80%BC%E8%BF%87%E7%A8%8B%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%EF%BC%9F%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">KVC的赋值和取值过程是怎样的？原理是什么？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Category"><span class="toc-number">1.1.4.</span> <span class="toc-text">Category</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Category%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E5%90%88%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">Category的使用场合是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Category%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">Category的实现原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Category%E5%92%8CClass-Extension%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.1.4.3.</span> <span class="toc-text">Category和Class Extension的区别是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Category%E4%B8%AD%E6%9C%89load%E6%96%B9%E6%B3%95%E5%90%97%EF%BC%9Fload%E6%96%B9%E6%B3%95%E6%98%AF%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%B0%83%E7%94%A8%E7%9A%84%EF%BC%9Fload%E6%96%B9%E6%B3%95%E8%83%BD%E7%BB%A7%E6%89%BF%E5%90%97%EF%BC%9F"><span class="toc-number">1.1.4.4.</span> <span class="toc-text">Category中有load方法吗？load方法是什么时候调用的？load方法能继承吗？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#load%E3%80%81initialize%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E5%AE%83%E4%BB%AC%E5%9C%A8category%E4%B8%AD%E7%9A%84%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F%EF%BC%9F%E4%BB%A5%E5%8F%8A%E5%87%BA%E7%8E%B0%E7%BB%A7%E6%89%BF%E6%97%B6%E5%AE%83%E4%BB%AC%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B%EF%BC%9F"><span class="toc-number">1.1.4.5.</span> <span class="toc-text">load、initialize方法的区别是什么？它们在category中的调用顺序？以及出现继承时它们之间的调用过程？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Category%E8%83%BD%E5%90%A6%E6%B7%BB%E5%8A%A0%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%EF%BC%9F%E5%A6%82%E6%9E%9C%E5%8F%AF%E4%BB%A5%EF%BC%8C%E5%A6%82%E4%BD%95%E7%BB%99Category%E6%B7%BB%E5%8A%A0%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%EF%BC%9F"><span class="toc-number">1.1.4.6.</span> <span class="toc-text">Category能否添加成员变量？如果可以，如何给Category添加成员变量？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">面向对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Objective-C%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">Objective-C的本质</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OC%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">OC对象的本质</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#NSObject%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.2.1.2.1.</span> <span class="toc-text">NSObject的底层实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E5%AE%B9%E6%98%93%E6%B7%B7%E6%B7%86%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.1.2.2.</span> <span class="toc-text">两个容易混淆的函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E6%97%B6%E6%9F%A5%E7%9C%8B%E5%86%85%E5%AD%98%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.1.2.3.</span> <span class="toc-text">实时查看内存数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84LLDB%E6%8C%87%E4%BB%A4"><span class="toc-number">1.2.1.2.4.</span> <span class="toc-text">常用的LLDB指令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E7%AB%AF%E6%A8%A1%E5%BC%8F%EF%BC%88Big-endian-x2F-Little-endian%EF%BC%89"><span class="toc-number">1.2.1.2.5.</span> <span class="toc-text">大小端模式（Big-endian&#x2F;Little-endian）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E7%82%B9%E7%9A%84OC%E5%AF%B9%E8%B1%A1%E6%9C%AC%E8%B4%A8"><span class="toc-number">1.2.1.2.6.</span> <span class="toc-text">复杂点的OC对象本质</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OC%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.2.2.</span> <span class="toc-text">OC对象的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#instance%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">instance对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#class%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">class对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#meta-class%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">meta-class对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">注意</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-x2F-%E7%B1%BB%E6%96%B9%E6%B3%95class%E8%BF%94%E5%9B%9E%E7%9A%84%E4%B8%80%E5%AE%9A%E6%98%AFclass%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.2.4.1.</span> <span class="toc-text">实例&#x2F;类方法class返回的一定是class对象</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8BClass%E6%98%AF%E5%90%A6%E6%98%AFmeta-class"><span class="toc-number">1.2.2.4.2.</span> <span class="toc-text">查看Class是否是meta-class</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#object-getClass%E4%B8%8Eobjc-getClass"><span class="toc-number">1.2.2.4.3.</span> <span class="toc-text">object_getClass与objc_getClass</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isa%E5%92%8Csuperclass"><span class="toc-number">1.2.3.</span> <span class="toc-text">isa和superclass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#isa%E6%8C%87%E9%92%88"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">isa指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#class%E5%AF%B9%E8%B1%A1%E7%9A%84superclass%E6%8C%87%E9%92%88"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">class对象的superclass指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#meta-class%E5%AF%B9%E8%B1%A1%E7%9A%84superclass%E6%8C%87%E9%92%88"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">meta-class对象的superclass指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#isa%E3%80%81superclass%E6%80%BB%E7%BB%93"><span class="toc-number">1.2.3.4.</span> <span class="toc-text">isa、superclass总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Class%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.4.</span> <span class="toc-text">Class的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#64bit%E4%B8%8B%E7%9A%84isa%E6%8C%87%E9%92%88"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">64bit下的isa指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AA%A5%E6%8E%A2struct-objc-class%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">窥探struct objc_class的结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KVO-1"><span class="toc-number">1.2.5.</span> <span class="toc-text">KVO</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AA%E4%BD%BF%E7%94%A8KVO%E7%9B%91%E5%90%AC%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.5.1.</span> <span class="toc-text">未使用KVO监听的对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BA%86KVO%E7%9B%91%E5%90%AC%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.5.2.</span> <span class="toc-text">使用了KVO监听的对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F-1"><span class="toc-number">1.2.5.3.</span> <span class="toc-text">注意</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KVC-1"><span class="toc-number">1.2.6.</span> <span class="toc-text">KVC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#setValue-forKey-%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.6.1.</span> <span class="toc-text">setValue:forKey:的原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#valueForKey-%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.6.2.</span> <span class="toc-text">valueForKey:的原理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Category-1"><span class="toc-number">1.2.7.</span> <span class="toc-text">Category</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Category%E7%9A%84%E5%BA%95%E5%B1%82%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.7.1.</span> <span class="toc-text">Category的底层结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Category%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.7.2.</span> <span class="toc-text">Category的加载处理过程</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/02/13/leetcode%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="leetcode学习记录"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="leetcode学习记录"/></a><div class="content"><a class="title" href="/2022/02/13/leetcode%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="leetcode学习记录">leetcode学习记录</a><time datetime="2022-02-12T21:46:18.000Z" title="发表于 2022-02-13 05:46:18">2022-02-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9B%B8%E5%85%B3%E8%8B%B1%E8%AF%AD%E8%AF%8D%E6%B1%87/" title="计算机相关英语词汇"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机相关英语词汇"/></a><div class="content"><a class="title" href="/2022/01/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9B%B8%E5%85%B3%E8%8B%B1%E8%AF%AD%E8%AF%8D%E6%B1%87/" title="计算机相关英语词汇">计算机相关英语词汇</a><time datetime="2022-01-07T19:03:28.000Z" title="发表于 2022-01-08 03:03:28">2022-01-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/07/%E5%B0%8F%E7%A0%81%E5%93%A5iOS%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="小码哥iOS底层原理学习记录"><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/20220107005932.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小码哥iOS底层原理学习记录"/></a><div class="content"><a class="title" href="/2022/01/07/%E5%B0%8F%E7%A0%81%E5%93%A5iOS%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="小码哥iOS底层原理学习记录">小码哥iOS底层原理学习记录</a><time datetime="2022-01-06T16:53:29.000Z" title="发表于 2022-01-07 00:53:29">2022-01-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/05/%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/" title="博客使用心得"><img src="https://cdn.jsdelivr.net/gh/qymeng/cdn/img/20220106095650.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="博客使用心得"/></a><div class="content"><a class="title" href="/2022/01/05/%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/" title="博客使用心得">博客使用心得</a><time datetime="2022-01-05T15:20:59.000Z" title="发表于 2022-01-05 23:20:59">2022-01-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/05/%E5%8D%9A%E5%AE%A2%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84%E6%8F%92%E4%BB%B6%E6%B1%87%E6%80%BB/" title="博客中用到的插件汇总"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="博客中用到的插件汇总"/></a><div class="content"><a class="title" href="/2022/01/05/%E5%8D%9A%E5%AE%A2%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84%E6%8F%92%E4%BB%B6%E6%B1%87%E6%80%BB/" title="博客中用到的插件汇总">博客中用到的插件汇总</a><time datetime="2022-01-05T14:49:55.000Z" title="发表于 2022-01-05 22:49:55">2022-01-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Dawnbreak</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
